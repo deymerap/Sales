@@ -36,7 +36,8 @@ namespace Sales.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
                 
             }
-            this.ListaProducts = (List<Product>)response.Result;
+            var vLista = (List<Product>)response.Result;
+            this.ListaProducts = new ObservableCollection<Product>(vLista);
         }
     }
 }

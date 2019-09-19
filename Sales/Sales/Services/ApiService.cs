@@ -39,7 +39,7 @@ namespace Sales.Services
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = vObjAnswer,
+                    Result = vLista,
                 };            }
             catch (Exception ex)
             {
