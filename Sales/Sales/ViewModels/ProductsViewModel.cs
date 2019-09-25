@@ -9,6 +9,7 @@ namespace Sales.ViewModels
     using System.Windows.Input;
     using Common.Models;
     using GalaSoft.MvvmLight.Command;
+    using Sales.Helpers;
     using Services;
     using Xamarin.Forms;
 
@@ -40,17 +41,32 @@ namespace Sales.ViewModels
 
         private async void LoadProducts()
         {
+            string vStrUrlAPI;
+            string vStrUrlAPIPrefix;
+            string vStrUrlProductsController;
+            var vObjConnection = await this.ApiService.CheckConnection();
+            if (!vObjConnection.IsSuccess)
+            {
+                this.IsRefreshing = false;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
+                return;
+            }
+
+            vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
+            vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
+            vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
             this.IsRefreshing = true;
-            var response = await this.ApiService.GetList<Product>("https://xamarinsalesapi.azurewebsites.net", "/api", "/Products");
+            var response = await this.ApiService.GetList<Product>(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController);
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
                 return;
             }
             var vLista = (List<Product>)response.Result;
             this.ListaProducts = new ObservableCollection<Product>(vLista);
             this.IsRefreshing = false;
+            
         }
 
         public ICommand RefreshCommand

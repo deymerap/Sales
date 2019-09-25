@@ -4,9 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:i18n="clr-namespace:Sales.Helpers"
              x:Class="Sales.Views.ProdutcsPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Productos">
+             Title="{i18n:Translate ProductsTitle}">
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" 
                      Padding="5,5,5,5" >

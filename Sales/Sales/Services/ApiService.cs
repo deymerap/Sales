@@ -5,17 +5,45 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Plugin.Connectivity;
+using Sales.Helpers;
 
 namespace Sales.Services
 {
     class ApiService
     {
+        public async Task<Response> CheckConnection()
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message= Languages.TurnOnInternet,
+                };
+            }
+
+            var vStrIsReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            if (!vStrIsReachable)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = Languages.NoInternet,
+                };
+            }
+
+            return new Response
+            {
+                IsSuccess = true,
+            };
+        }
 
         public async Task<Response>GetList<T>(string pvUrlBase ,string pvStrPrefix, string pvStrController)
         {
             HttpClient vObjHttpClient;
             HttpResponseMessage vObjResponse;
-            string vStrUrlMethod = $"{pvStrPrefix}{pvStrController}";
+            string vStrUrlMethod = $"/{pvStrPrefix}/{pvStrController}";
 
             try
             {
