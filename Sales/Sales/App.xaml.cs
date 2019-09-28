@@ -13,9 +13,9 @@ namespace Sales
             InitializeComponent();
 
             MainPage = new NavigationPage(new ProdutcsPage());
-#if DEBUG
-            HotReloader.Current.Run(this);
-#endif 
+//#if DEBUG
+//            HotReloader.Current.Run(this);
+//#endif 
         }
 
         protected override void OnStart()

@@ -21,15 +21,20 @@
                         <ViewCell>
                             <Grid Padding="2,5,0,5">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-
+                                <Image Grid.Column="0" 
+                                       Source="{Binding ImageFullPath}" 
+                                       WidthRequest="100"/>
+                                
                                 <Label FontAttributes="Bold" 
-                                       Grid.Column="0"     
+                                       Grid.Column="1"     
                                        Text="{Binding Description}" />
+                                
                                 <Label FontAttributes="Bold"  
-                                       Grid.Column="1"
+                                       Grid.Column="2"
                                        HorizontalOptions="End"
                                        Text="{Binding Price, StringFormat='{0:C2}'}" />
                             </Grid>
