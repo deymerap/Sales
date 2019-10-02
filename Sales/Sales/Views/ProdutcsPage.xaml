@@ -11,6 +11,7 @@
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" 
                      Padding="5,5,5,5" >
+            
             <ListView ItemsSource="{Binding ListaProducts}"
                       IsPullToRefreshEnabled="True" 
                       IsRefreshing="{Binding IsRefreshing}"

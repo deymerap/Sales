@@ -16,7 +16,7 @@ namespace Sales.API.Controllers
 {
     public class ProductsController : ApiController
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db = new DataContext();
 
         // GET: api/Products
         public IQueryable<Product> GetProducts()
