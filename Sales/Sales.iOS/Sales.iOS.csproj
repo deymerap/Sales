@@ -137,5 +137,7 @@
       <Name>Sales</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_action_playlist_add.png" />
+  </ItemGroup>
 </Project>

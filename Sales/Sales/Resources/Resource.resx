@@ -132,4 +132,7 @@
   <data name="Accept" xml:space="preserve">
     <value>Accept</value>
   </data>
+  <data name="AddProductsTitle" xml:space="preserve">
+    <value>Add Products</value>
+  </data>
 </root>

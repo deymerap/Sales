@@ -5,12 +5,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:i18n="clr-namespace:Sales.Helpers"
+             xmlns:custom="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="Sales.Views.ProdutcsPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="{i18n:Translate ProductsTitle}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_action_playlist_add.png" Command="{Binding cmdAddProducts}" />
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" 
-                     Padding="5,5,5,5" >
+                     Padding="5,5,5,5">
             
             <ListView ItemsSource="{Binding ListaProducts}"
                       IsPullToRefreshEnabled="True" 
@@ -26,13 +31,23 @@
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" 
-                                       Source="{Binding ImageFullPath}" 
-                                       WidthRequest="100"/>
+
+                                <custom:CircleImage Grid.Column="0" 
+                                                    Source="{Binding ImageFullPath}" 
+                                                    WidthRequest="100" 
+                                                    HeightRequest="100" 
+                                                    Aspect="AspectFill" 
+                                                    VerticalOptions="Start" 
+                                                    HorizontalOptions="CenterAndExpand" />
+                                <StackLayout Grid.Column="1"
+                                             VerticalOptions="Center">
+
+                                    <Label FontAttributes="Bold"
+                                           Text="{Binding Description}" />
+                                    <Label FontAttributes="Bold"
+                                           Text="{Binding Notes}" />
+                                </StackLayout>
                                 
-                                <Label FontAttributes="Bold" 
-                                       Grid.Column="1"     
-                                       Text="{Binding Description}" />
                                 
                                 <Label FontAttributes="Bold"  
                                        Grid.Column="2"

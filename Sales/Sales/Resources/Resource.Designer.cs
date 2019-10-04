@@ -70,6 +70,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Products.
+        /// </summary>
+        public static string AddProductsTitle {
+            get {
+                return ResourceManager.GetString("AddProductsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {

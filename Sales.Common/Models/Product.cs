@@ -35,7 +35,7 @@
                 {
                     return "NoImage.png";
                 }
-                return $"https://localhost:44305/{this.ImagePath.Substring(1)}";
+                return $"https://xamarinsalesbackend.azurewebsites.net{this.ImagePath.Substring(1)}";
             }
         }
     }

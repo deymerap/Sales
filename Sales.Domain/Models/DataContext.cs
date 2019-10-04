@@ -5,7 +5,7 @@
     {
         public DataContext() : base("DefaultConnection")
         {
-                
+            Database.SetInitializer<DataContext>(null);
         }
 
         public DbSet<Common.Models.Product> Products { get; set; }

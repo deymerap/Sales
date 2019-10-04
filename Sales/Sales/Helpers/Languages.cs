@@ -37,5 +37,10 @@
             get { return Resource.Accept; }
         }
 
+        public static string AddProductsTitle
+        {
+            get { return Resource.AddProductsTitle; }
+        }
+
     }
 }
