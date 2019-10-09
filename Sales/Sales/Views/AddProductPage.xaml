@@ -4,15 +4,47 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              xmlns:i18n="clr-namespace:Sales.Helpers"
              x:Class="Sales.ViewModels.AddProductPage"
              Title="{i18n:Translate AddProductsTitle}">
     
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <ScrollView BindingContext="{Binding AddProducts}">
+            <StackLayout Padding="5,5,5,5">
+                <Image Source="{Binding ImageSource}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding cmdCambiarImagen}"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label  FontSize="Small"
+                        HorizontalOptions="Center"
+                        Text="{i18n:Translate ChangeImage}" />
+
+                <Label  Text="{i18n:Translate AddProdDescription}" />
+                <Entry  Placeholder="{i18n:Translate AddProdDescPlaceHolder}"
+                        Text="{Binding Description}"/>
+            
+                <Label  Text="{i18n:Translate AddProdPrice}" />
+                <Entry  Keyboard="Numeric"
+                        Placeholder="{i18n:Translate AddProdPricePlaceHolder}"
+                        Text="{Binding Price}" />
+
+                <Label  Text="{i18n:Translate AddProdNotes}" />
+                <Editor Placeholder="{i18n:Translate AddProdNotesPlaceHolder}"
+                        Text="{Binding Notes}"
+                        VerticalOptions="FillAndExpand"/>
+
+                <ActivityIndicator  IsRunning="{Binding IsRunningActIndicator}"
+                                    VerticalOptions="CenterAndExpand" />
+                <Button BackgroundColor="Navy"
+                        CornerRadius="10"
+                        Command="{Binding cmdSave}"
+                        HeightRequest="46"
+                        IsEnabled ="{Binding IsEnabledCmdSave}"
+                        TextColor="White"
+                        Text="{i18n:Translate Save}"/>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

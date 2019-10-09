@@ -78,5 +78,52 @@ namespace Sales.Services
                 };
             }
         }
+
+        public async Task<Response> Post<T>(string pvUrlBase, string pvStrPrefix, string pvStrController, T pvObjClassModel)
+        {
+
+            HttpClient vObjHttpClient;
+            HttpResponseMessage vObjResponse;
+            HttpContent vObjContent;
+
+            string vStrUrlMethod = $"/{pvStrPrefix}/{pvStrController}";
+
+            try
+            {
+                vObjHttpClient = new HttpClient();
+                vObjHttpClient.BaseAddress = new Uri(pvUrlBase);
+                var vJSONClass = JsonConvert.SerializeObject(pvObjClassModel);
+                vObjContent = new StringContent(vJSONClass, Encoding.UTF8, "application/json");
+                vObjResponse = await vObjHttpClient.PostAsync(vStrUrlMethod, vObjContent);
+                var vObjAnswer = await vObjResponse.Content.ReadAsStringAsync();
+
+                if (!vObjResponse.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = vObjAnswer,
+                    };
+                }
+
+                var vObjClassRespnse = JsonConvert.DeserializeObject<T>(vObjAnswer);
+
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "",
+                    Result = vObjClassRespnse,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
     }
 }

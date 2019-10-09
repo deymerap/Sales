@@ -1,9 +1,5 @@
-﻿
-using Sales.Common.Models;
-
-namespace Sales.ViewModels
+﻿namespace Sales.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
@@ -15,11 +11,13 @@ namespace Sales.ViewModels
 
     public class ProductsViewModel : BaseViewModel
     {
-        private ApiService ApiService;
+        #region Attributes
+        private ApiService apiService;
         private ObservableCollection<Product> listaProducts;
         private bool isRefreshing;
-        
+        #endregion
 
+        #region Propperties
         public bool IsRefreshing
         {
             get { return this.isRefreshing; }
@@ -30,21 +28,19 @@ namespace Sales.ViewModels
             get { return this.listaProducts; }
             set { this.SetValue(ref this.listaProducts, value); }
         }
-        
+        #endregion
 
-
+        #region Contrunctorts
         public ProductsViewModel()
         {
-            this.ApiService = new ApiService();
+            instance = this;
+            this.apiService = new ApiService();
             this.LoadProducts();
         }
-
+        
         private async void LoadProducts()
         {
-            string vStrUrlAPI;
-            string vStrUrlAPIPrefix;
-            string vStrUrlProductsController;
-            var vObjConnection = await this.ApiService.CheckConnection();
+            var vObjConnection = await this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRefreshing = false;
@@ -52,11 +48,11 @@ namespace Sales.ViewModels
                 return;
             }
 
-            vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
-            vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
-            vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
+            string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
+            string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
+            string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
             this.IsRefreshing = true;
-            var response = await this.ApiService.GetList<Product>(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController);
+            var response = await this.apiService.GetList<Product>(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController);
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;
@@ -68,7 +64,21 @@ namespace Sales.ViewModels
             this.IsRefreshing = false;
             
         }
+        #endregion
 
+        #region Singleton
+        private static ProductsViewModel instance;
+        public static ProductsViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                return new ProductsViewModel();
+            }
+            return instance;
+        }
+        #endregion
+
+        #region Command
         public ICommand RefreshCommand
         {
             get
@@ -76,5 +86,6 @@ namespace Sales.ViewModels
                 return new  RelayCommand(LoadProducts);
             }
         }
+        #endregion
     }
 }

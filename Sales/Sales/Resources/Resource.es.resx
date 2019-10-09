@@ -135,4 +135,52 @@
   <data name="AddProductsTitle" xml:space="preserve">
     <value>Adicionar Producto.</value>
   </data>
+  <data name="AddProdDescription" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="AddProdDescPlaceHolder" xml:space="preserve">
+    <value>Introducir descripción</value>
+  </data>
+  <data name="AddProdNotes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="AddProdNotesPlaceHolder" xml:space="preserve">
+    <value>Notas de entrada</value>
+  </data>
+  <data name="AddProdPrice" xml:space="preserve">
+    <value>Precio</value>
+  </data>
+  <data name="AddProdPricePlaceHolder" xml:space="preserve">
+    <value>Ingresar Precio</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>Toque la imagen para cambiar</value>
+  </data>
+  <data name="AddProdDescError" xml:space="preserve">
+    <value>Debe ingresar una descripcion.</value>
+  </data>
+  <data name="AddProdPriceError" xml:space="preserve">
+    <value>Debes ingresar un valor mayor a cero.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="NewPicture" xml:space="preserve">
+    <value>Tomar foto</value>
+  </data>
+  <data name="FromGallery" xml:space="preserve">
+    <value>Galeria</value>
+  </data>
+  <data name="ImageSource" xml:space="preserve">
+    <value>Seleccionar imagen desde:</value>
+  </data>
 </root>

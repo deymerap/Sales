@@ -32,13 +32,16 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <custom:CircleImage Grid.Column="0" 
+                                <!--<custom:CircleImage Grid.Column="0" 
                                                     Source="{Binding ImageFullPath}" 
                                                     WidthRequest="100" 
                                                     HeightRequest="100" 
                                                     Aspect="AspectFill" 
                                                     VerticalOptions="Start" 
-                                                    HorizontalOptions="CenterAndExpand" />
+                                                    HorizontalOptions="CenterAndExpand" />-->
+                                <Image WidthRequest="100" 
+                                       Source="{Binding ImageFullPath}"></Image> 
+                                       
                                 <StackLayout Grid.Column="1"
                                              VerticalOptions="Center">
 

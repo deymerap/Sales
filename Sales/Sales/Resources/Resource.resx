@@ -135,4 +135,52 @@
   <data name="AddProductsTitle" xml:space="preserve">
     <value>Add Products</value>
   </data>
+  <data name="AddProdDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="AddProdDescPlaceHolder" xml:space="preserve">
+    <value>Input Description</value>
+  </data>
+  <data name="AddProdNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="AddProdNotesPlaceHolder" xml:space="preserve">
+    <value>Input Notes</value>
+  </data>
+  <data name="AddProdPrice" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="AddProdPricePlaceHolder" xml:space="preserve">
+    <value>Input Price</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>Touch image to change</value>
+  </data>
+  <data name="AddProdDescError" xml:space="preserve">
+    <value>You must enter a description.</value>
+  </data>
+  <data name="AddProdPriceError" xml:space="preserve">
+    <value>You must enter a value greater than zero.</value>
+  </data>
+  <data name="ImageSource" xml:space="preserve">
+    <value>Select image from:</value>
+  </data>
+  <data name="FromGallery" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
+  <data name="NewPicture" xml:space="preserve">
+    <value>Take photo</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

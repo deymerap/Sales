@@ -2,6 +2,8 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Product
     {
         [Key]
@@ -27,6 +29,9 @@
         [DataType(DataType.Date)]
         public DateTime PublishOn { get; set; }
 
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
+
         public string ImageFullPath
         {
             get
@@ -35,7 +40,8 @@
                 {
                     return "NoImage.png";
                 }
-                return $"https://xamarinsalesbackend.azurewebsites.net{this.ImagePath.Substring(1)}";
+                return $"https://xamarinsalesapi.azurewebsites.net{this.ImagePath.Substring(1)}";
+               // return $"https://xamarinsalesbackend.azurewebsites.net{this.ImagePath.Substring(1)}";
             }
         }
     }
