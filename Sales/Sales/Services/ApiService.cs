@@ -125,5 +125,45 @@ namespace Sales.Services
             }
         }
 
+
+        public async Task<Response> Delete(string pvUrlBase, string pvStrPrefix, string pvStrController, int vStrId)
+        {
+            HttpClient vObjHttpClient;
+            HttpResponseMessage vObjResponse;
+            string vStrUrlMethod = $"/{pvStrPrefix}/{pvStrController}/{vStrId}";
+
+            try
+            {
+                vObjHttpClient = new HttpClient();
+                vObjHttpClient.BaseAddress = new Uri(pvUrlBase);
+
+                vObjResponse = await vObjHttpClient.DeleteAsync(vStrUrlMethod);
+                var vObjAnswer = await vObjResponse.Content.ReadAsStringAsync();
+
+                if (!vObjResponse.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = vObjAnswer,
+                    };
+                }
+
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "",
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
     }
 }

@@ -16,8 +16,12 @@
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" 
                      Padding="5,5,5,5">
+            <SearchBar  HeightRequest="40"
+                        Placeholder="{i18n:Translate Search}"
+                        SearchCommand="{Binding cmdSearch}"
+                        Text="{Binding FilterText}"/>
             
-            <ListView ItemsSource="{Binding ListaProducts}"
+            <ListView ItemsSource="{Binding ListProducts}"
                       IsPullToRefreshEnabled="True" 
                       IsRefreshing="{Binding IsRefreshing}"
                       HasUnevenRows="True"
@@ -34,8 +38,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding cmdEditProducts}" />
+                                </Grid.GestureRecognizers>
                                 <!--<custom:CircleImage Grid.Column="0" 
                                                     Source="{Binding ImageFullPath}" 
                                                     WidthRequest="100" 
@@ -60,6 +68,10 @@
                                        Grid.Column="2"
                                        HorizontalOptions="End"
                                        Text="{Binding Price, StringFormat='{0:C2}'}" />
+                                
+                                <Image Grid.Column="3"
+                                       Source="ic_action_chevron_right"
+                                       VerticalOptions="Center"></Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

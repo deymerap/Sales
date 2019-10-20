@@ -143,4 +143,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_action_playlist_add.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_action_chevron_right.png" />
+  </ItemGroup>
 </Project>

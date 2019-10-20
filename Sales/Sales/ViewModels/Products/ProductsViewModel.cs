@@ -1,7 +1,9 @@
 ﻿namespace Sales.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using Common.Models;
     using GalaSoft.MvvmLight.Command;
@@ -13,21 +15,34 @@
     {
         #region Attributes
         private ApiService apiService;
-        private ObservableCollection<Product> listaProducts;
+        private ObservableCollection<Products.ProductItemViewModel> listProducts;
         private bool isRefreshing;
+        public String filterText;
         #endregion
 
         #region Propperties
+        public List<Product> vObjList { get; set; }
+
         public bool IsRefreshing
         {
             get { return this.isRefreshing; }
             set { this.SetValue(ref this.isRefreshing, value); }
         }
-        public ObservableCollection<Product> ListaProducts
+
+        public ObservableCollection<Products.ProductItemViewModel> ListProducts
         {
-            get { return this.listaProducts; }
-            set { this.SetValue(ref this.listaProducts, value); }
+            get { return this.listProducts; }
+            set { this.SetValue(ref this.listProducts, value); }
         }
+
+        public String FilterText
+        {
+            get { return this.filterText; }
+            set { this.SetValue(ref this.filterText, value);
+                RefreshListProducts();
+            }
+        }
+
         #endregion
 
         #region Contrunctorts
@@ -59,10 +74,44 @@
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
                 return;
             }
-            var vLista = (List<Product>)response.Result;
-            this.ListaProducts = new ObservableCollection<Product>(vLista);
+           vObjList = (List<Product>)response.Result;
+            this.RefreshListProducts();
             this.IsRefreshing = false;
             
+        }
+
+        public void RefreshListProducts()
+        {
+            if (string.IsNullOrEmpty(this.FilterText))
+            {
+                var vListProdItem = this.vObjList.Select(Prod => new Products.ProductItemViewModel
+                {
+                    ProductID = Prod.ProductID,
+                    Description = Prod.Description,
+                    Notes = Prod.Notes,
+                    Price = Prod.Price,
+                    IsAvailable = Prod.IsAvailable,
+                    PublishOn = Prod.PublishOn,
+                    ImageArray = Prod.ImageArray,
+                    ImagePath = Prod.ImagePath,
+                });
+                this.ListProducts = new ObservableCollection<Products.ProductItemViewModel>(vListProdItem.OrderBy(Prod => Prod.Description));
+            }
+            else
+            {
+                var vListProdItem = this.vObjList.Select(Prod => new Products.ProductItemViewModel
+                {
+                    ProductID = Prod.ProductID,
+                    Description = Prod.Description,
+                    Notes = Prod.Notes,
+                    Price = Prod.Price,
+                    IsAvailable = Prod.IsAvailable,
+                    PublishOn = Prod.PublishOn,
+                    ImageArray = Prod.ImageArray,
+                    ImagePath = Prod.ImagePath,
+                }).Where(Prod => Prod.Description.ToLower().Contains(this.FilterText.ToLower())).ToList();
+                this.ListProducts = new ObservableCollection<Products.ProductItemViewModel>(vListProdItem.OrderBy(Prod => Prod.Description));
+            }
         }
         #endregion
 
@@ -84,6 +133,14 @@
             get
             {
                 return new  RelayCommand(LoadProducts);
+            }
+        }
+
+        public ICommand cmdSearch
+        {
+            get
+            {
+                return new RelayCommand(RefreshListProducts);
             }
         }
         #endregion

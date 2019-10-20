@@ -4,13 +4,20 @@ namespace Sales.ViewModels.Products
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Sales.Common.Models;
-    class ProductItemViewModel : Product
+    using Sales.Helpers;
+    using Sales.Services;
+    using Sales.Views.Products;
+    using Xamarin.Forms;
+
+    public class ProductItemViewModel : Product
     {
         #region Attributes
+        private ApiService apiService;
         #endregion
 
 
@@ -19,14 +26,54 @@ namespace Sales.ViewModels.Products
 
 
         #region Contrunctorts and  Methods
-        private void EditProducts()
+        public ProductItemViewModel()
         {
-            throw new NotImplementedException();
+            this.apiService = new ApiService();
         }
 
-        private void Deleteproducts()
+        private async void EditProducts()
         {
-            throw new NotImplementedException();
+            //this.EditProducts = new EditProductViewModel();
+            MainViewModel.GetInstance().EditProducts = new EditProductViewModel(this);
+            await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+        }
+
+        private async void Deleteproducts()
+        {
+            var vAnswer =await Application.Current.MainPage.DisplayAlert(
+                Languages.Confirm,
+                Languages.DeleteConfirmation,
+                Languages.Yes,
+                Languages.No
+                );
+
+            if(vAnswer == false)
+            {
+                return;
+            }
+
+            var vObjConnection = await this.apiService.CheckConnection();
+            if (!vObjConnection.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
+                return;
+            }
+
+            string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
+            string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
+            string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
+            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, ProductID);
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.Confirm, Languages.Accept);
+                return;
+            }
+            ProductsViewModel vProductsViewModel = ProductsViewModel.GetInstance();
+            var vDeleteProd = vProductsViewModel.vObjList.Where(Prod => Prod.ProductID == this.ProductID).FirstOrDefault();
+            if (vDeleteProd != null)
+                vProductsViewModel.vObjList.Remove(vDeleteProd);
+
+            vProductsViewModel.RefreshListProducts();
         }
         #endregion
 

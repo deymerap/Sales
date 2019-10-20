@@ -201,4 +201,40 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="EditProductsTitle" xml:space="preserve">
+    <value>Edit Product</value>
+  </data>
+  <data name="AddProdIsAvailable" xml:space="preserve">
+    <value>Is Available?</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="EMail" xml:space="preserve">
+    <value>EMail</value>
+  </data>
+  <data name="EmailPlaceHolder" xml:space="preserve">
+    <value>Enter your email</value>
+  </data>
+  <data name="PasswordUser" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordPlaceHolder" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="Rememberme" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>Do you forgot your password?</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>New user</value>
+  </data>
 </root>

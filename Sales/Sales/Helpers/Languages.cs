@@ -122,5 +122,67 @@
             get { return Resource.Delete; }
         }
 
+        public static string EditProductsTitle
+        {
+            get { return Resource.EditProductsTitle; }
+        }
+
+        public static string AddProdIsAvailable
+        {
+            get { return Resource.AddProdIsAvailable; }
+        }
+
+        public static string Search
+        {
+            get { return Resource.Search; }
+        }
+
+        public static string Filter
+        {
+            get { return Resource.Filter; }
+        }
+
+        public static string Login
+        {
+            get { return Resource.Login; }
+        }
+
+        public static string EMail
+        {
+            get { return Resource.EMail; }
+        }
+
+        public static string EmailPlaceHolder
+        {
+            get { return Resource.EmailPlaceHolder; }
+        }
+
+        public static string PasswordUser
+        {
+            get { return Resource.PasswordUser; }
+        }
+
+        public static string PasswordPlaceHolder
+        {
+            get { return Resource.PasswordPlaceHolder; }
+        }
+
+        public static string Rememberme
+        {
+            get { return Resource.Rememberme; }
+        }
+        
+        public static string Forgot
+        {
+            get { return Resource.Forgot; }
+        }
+        
+        public static string Register
+        {
+            get { return Resource.Register; }
+        }
+
+
+
     }
 }

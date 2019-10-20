@@ -125,9 +125,21 @@
             }
 
             Product vNewProducts = (Product) vResponse.Result;
+            //var vNewProductsItem = new Products.ProductItemViewModel
+            //{
+            //    ProductID = vNewProducts.ProductID,
+            //    Description = vNewProducts.Description,
+            //    Notes = vNewProducts.Notes,
+            //    Price = vNewProducts.Price,
+            //    IsAvailable = vNewProducts.IsAvailable,
+            //    PublishOn = vNewProducts.PublishOn,
+            //    ImageArray = vNewProducts.ImageArray,
+            //    ImagePath = vNewProducts.ImagePath,
+            //};
             ProductsViewModel vProductsViewModel = ProductsViewModel.GetInstance();
-            vProductsViewModel.ListaProducts.Add(vNewProducts);
-
+            //vProductsViewModel.ListProducts.Add(vNewProductsItem);
+            vProductsViewModel.vObjList.Add(vNewProducts);
+            vProductsViewModel.RefreshListProducts();
             this.IsRunningActIndicator = false;
             this.IsEnabledCmdSave = true;
             await Application.Current.MainPage.Navigation.PopAsync();

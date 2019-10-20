@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:i18n="clr-namespace:Sales.Helpers"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="{i18n:Translate EditProductsTitle}"
+             x:Class="Sales.Views.Products.EditProductPage">
+    <ContentPage.Content>
+        <ScrollView BindingContext="{Binding EditProducts}">
+            <StackLayout Padding="5,5,5,5">
+                <Image Source="{Binding ImageSource}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding cmdCambiarImagen}"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label  FontSize="Small"
+                        HorizontalOptions="Center"
+                        Text="{i18n:Translate ChangeImage}" />
+
+                <Label  Text="{i18n:Translate AddProdDescription}" />
+                <Entry  Placeholder="{i18n:Translate AddProdDescPlaceHolder}"
+                        Text="{Binding ProductItemViewModel.Description}"/>
+
+                <Label  Text="{i18n:Translate AddProdPrice}" />
+                <Entry  Keyboard="Numeric"
+                        Placeholder="{i18n:Translate AddProdPricePlaceHolder}"
+                        Text="{Binding ProductItemViewModel.Price}" />
+
+                <Label  Text="{i18n:Translate AddProdNotes}" />
+                <Editor Placeholder="{i18n:Translate AddProdNotesPlaceHolder}"
+                        Text="{Binding ProductItemViewModel.Notes}"
+                        VerticalOptions="FillAndExpand"/>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label  Text="{i18n:Translate AddProdIsAvailable}" />
+                    <Switch IsToggled="{Binding ProductItemViewModel.IsAvailable}"
+                            HorizontalOptions="FillAndExpand"></Switch> 
+                </StackLayout>
+
+                
+                <ActivityIndicator  IsRunning="{Binding IsRunningActIndicator}"
+                                    VerticalOptions="CenterAndExpand" />
+                <StackLayout Orientation="Horizontal">
+                    <Button BackgroundColor="Navy"
+                            CornerRadius="10"
+                            Command="{Binding cmdSave}"
+                            HeightRequest="46"
+                            HorizontalOptions="FillAndExpand"
+                            IsEnabled ="{Binding IsEnabledCmdSave}"
+                            TextColor="White"
+                            Text="{i18n:Translate Save}"/>
+                    
+                    <Button BackgroundColor="Red"
+                        CornerRadius="10"
+                        Command="{Binding cmdDelete}"
+                        HeightRequest="46"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled ="{Binding IsEnabledCmdSave}"
+                        TextColor="White"
+                        Text="{i18n:Translate Delete}"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

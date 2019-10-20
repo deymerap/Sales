@@ -106,6 +106,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Available?.
+        /// </summary>
+        public static string AddProdIsAvailable {
+            get {
+                return ResourceManager.GetString("AddProdIsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
         public static string AddProdNotes {
@@ -223,11 +232,56 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Product.
+        /// </summary>
+        public static string EditProductsTitle {
+            get {
+                return ResourceManager.GetString("EditProductsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EMail.
+        /// </summary>
+        public static string EMail {
+            get {
+                return ResourceManager.GetString("EMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email.
+        /// </summary>
+        public static string EmailPlaceHolder {
+            get {
+                return ResourceManager.GetString("EmailPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you forgot your password?.
+        /// </summary>
+        public static string Forgot {
+            get {
+                return ResourceManager.GetString("Forgot", resourceCulture);
             }
         }
         
@@ -246,6 +300,15 @@ namespace Sales.Resources {
         public static string ImageSource {
             get {
                 return ResourceManager.GetString("ImageSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -277,6 +340,24 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your password.
+        /// </summary>
+        public static string PasswordPlaceHolder {
+            get {
+                return ResourceManager.GetString("PasswordPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string PasswordUser {
+            get {
+                return ResourceManager.GetString("PasswordUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Products.
         /// </summary>
         public static string ProductsTitle {
@@ -286,11 +367,38 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New user.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        public static string Rememberme {
+            get {
+                return ResourceManager.GetString("Rememberme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         
