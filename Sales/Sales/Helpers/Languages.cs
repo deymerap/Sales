@@ -180,6 +180,11 @@
         public static string Register
         {
             get { return Resource.Register; }
+        } 
+        
+        public static string AuthError
+        {
+            get { return Resource.AuthError; }
         }
 
 

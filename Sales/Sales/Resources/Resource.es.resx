@@ -237,4 +237,7 @@
   <data name="PasswordUser" xml:space="preserve">
     <value>Contraseña:</value>
   </data>
+  <data name="AuthError" xml:space="preserve">
+    <value>El correo electronico o la contraseña no son validos.</value>
+  </data>
 </root>

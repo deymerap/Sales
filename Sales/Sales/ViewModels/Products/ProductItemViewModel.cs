@@ -35,7 +35,7 @@ namespace Sales.ViewModels.Products
         {
             //this.EditProducts = new EditProductViewModel();
             MainViewModel.GetInstance().EditProducts = new EditProductViewModel(this);
-            await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+            await App.Navigator.PushAsync(new EditProductPage());
         }
 
         private async void Deleteproducts()
@@ -62,7 +62,7 @@ namespace Sales.ViewModels.Products
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
-            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, ProductID);
+            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, ProductID, Settings.TokenType, Settings.AccessToke);
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.Confirm, Languages.Accept);

@@ -1,12 +1,12 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Sales.Views.Products
+namespace Sales.Views.Login
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddProductPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public AddProductPage()
+        public LoginPage()
         {
             InitializeComponent();
         }

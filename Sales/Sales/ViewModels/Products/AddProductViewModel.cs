@@ -114,7 +114,7 @@
                 ImageArray = vImageArray,
             };
 
-            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, vObProduct);
+            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, vObProduct, Settings.TokenType, Settings.AccessToke);
 
             if (!vResponse.IsSuccess)
             {
@@ -142,7 +142,7 @@
             vProductsViewModel.RefreshListProducts();
             this.IsRunningActIndicator = false;
             this.IsEnabledCmdSave = true;
-            await Application.Current.MainPage.Navigation.PopAsync();
+            await App.Navigator.PopAsync();
         }
 
 

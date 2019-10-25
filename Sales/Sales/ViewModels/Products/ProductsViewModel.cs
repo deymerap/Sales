@@ -67,7 +67,11 @@
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
             this.IsRefreshing = true;
-            var response = await this.apiService.GetList<Product>(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController);
+            var response = await this.apiService.GetList<Product>(vStrUrlAPI, 
+                                                                vStrUrlAPIPrefix, 
+                                                                vStrUrlProductsController, 
+                                                                Settings.TokenType, 
+                                                                Settings.AccessToke);
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;

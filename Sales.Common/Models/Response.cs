@@ -1,4 +1,4 @@
-﻿namespace Sales.Common
+﻿namespace Sales.Common.Models
 {
     using System;
     public class Response

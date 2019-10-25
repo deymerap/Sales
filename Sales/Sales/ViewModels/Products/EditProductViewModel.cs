@@ -95,7 +95,7 @@ namespace Sales.ViewModels
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
-            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, this.ProductItemViewModel.ProductID);
+            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, this.ProductItemViewModel.ProductID, Settings.TokenType, Settings.AccessToke);
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.Confirm, Languages.Accept);
@@ -107,7 +107,7 @@ namespace Sales.ViewModels
                 vProductsViewModel.vObjList.Remove(vDeleteProd);
 
             vProductsViewModel.RefreshListProducts();
-            await Application.Current.MainPage.Navigation.PopAsync();
+            await App.Navigator.PopAsync();
         }
 
         #endregion

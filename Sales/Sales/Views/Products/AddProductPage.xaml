@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              xmlns:i18n="clr-namespace:Sales.Helpers"
-             x:Class="Sales.ViewModels.AddProductPage"
+             x:Class="Sales.Views.Products.AddProductPage"
              Title="{i18n:Translate AddProductsTitle}">
     
     <ContentPage.Content>

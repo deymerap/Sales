@@ -1,18 +1,32 @@
-﻿
-
-namespace Sales
+﻿namespace Sales
 {
-    using Sales.Views;
-    using System;
     using Xamarin.Forms;
-    using Xamarin.Forms.Xaml;
+    using Sales.ViewModels;
+    using Sales.Views.Login;
+    using Sales.Helpers;
+    using Sales.Views.Products;
+    using Sales.Views;
+
     public partial class App : Application
     {
+        public static NavigationPage Navigator { get; internal set; }
+
         public App()
         {
             InitializeComponent();
+            if(Settings.IsRemembered && !string.IsNullOrEmpty(Settings.AccessToke))
+            {
+                MainViewModel.GetInstance().Products = new ProductsViewModel();
+                MainViewModel.GetInstance().MenuItem = new MenuItemViewModel();
+                MainPage = new MasterPage();
+            }
+            else
+            {
+                MainViewModel.GetInstance().Login = new LoginViewModel();
+                Application.Current.MainPage =new NavigationPage(new LoginPage());
+            }
 
-            MainPage = new NavigationPage(new ProdutcsPage());
+
 //#if DEBUG
 //            HotReloader.Current.Run(this);
 //#endif 

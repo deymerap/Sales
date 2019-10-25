@@ -169,6 +169,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email or password are not valid.!.
+        /// </summary>
+        public static string AuthError {
+            get {
+                return ResourceManager.GetString("AuthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
