@@ -6,21 +6,59 @@
              mc:Ignorable="d"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              xmlns:i18n="clr-namespace:Sales.Helpers"
+             xmlns:custom="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="Sales.Views.MenuPage"
-             Title="Menu">
-    <ContentPage.Content >
-        <ScrollView BindingContext="{Binding MenuItem}">
-            <StackLayout>
-
-                <Button BackgroundColor="Navy"
-                    BorderRadius="23"
-                    Command="{Binding cmdCloseSession}"
-                    HeightRequest="46"
-                    HorizontalOptions="FillAndExpand"
-                    Text="Cerrar Sesion"
-                    TextColor="White">
-                </Button>
-            </StackLayout>
-        </ScrollView>
+             BackgroundColor="DarkGray"
+             Title="{i18n:Translate Menu}">
+     <ContentPage.Content>
+        <StackLayout
+            Padding="5">
+            <custom:CircleImage  
+                Source="{Binding UserImageFullPath}"
+                Aspect="AspectFill"
+                WidthRequest="200"
+                HeightRequest="200">
+            </custom:CircleImage>
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="{Binding UserFullName}"
+                TextColor="White">
+            </Label>
+            <ListView
+                BackgroundColor="Transparent"
+                ItemsSource="{Binding Menu}"
+                HasUnevenRows="True"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding cmdGoto}"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Grid.Column="0"
+                                    Source="{Binding Icon}"
+                                    WidthRequest="50"
+                                    HeightRequest="50">
+                                </Image>
+                                <Label
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    TextColor="White"
+                                    Text="{Binding Title}">
+                                </Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -88,7 +88,7 @@
             this.IsRunningActIndicator = true;
             this.IsEnabledCmdSave = false;
 
-            var vObjConnection = await this.apiService.CheckConnection();
+            var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRunningActIndicator = false;
@@ -114,7 +114,7 @@
                 ImageArray = vImageArray,
             };
 
-            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, vObProduct, Settings.TokenType, Settings.AccessToke);
+            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, vObProduct, Preferences.TokenType, Preferences.AccessToke);
 
             if (!vResponse.IsSuccess)
             {

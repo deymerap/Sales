@@ -55,7 +55,7 @@
         
         private async void LoadProducts()
         {
-            var vObjConnection = await this.apiService.CheckConnection();
+            var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRefreshing = false;
@@ -70,8 +70,8 @@
             var response = await this.apiService.GetList<Product>(vStrUrlAPI, 
                                                                 vStrUrlAPIPrefix, 
                                                                 vStrUrlProductsController, 
-                                                                Settings.TokenType, 
-                                                                Settings.AccessToke);
+                                                                Preferences.TokenType, 
+                                                                Preferences.AccessToke);
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;

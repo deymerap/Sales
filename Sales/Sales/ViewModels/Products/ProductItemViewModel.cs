@@ -52,7 +52,7 @@ namespace Sales.ViewModels.Products
                 return;
             }
 
-            var vObjConnection = await this.apiService.CheckConnection();
+            var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
@@ -62,7 +62,7 @@ namespace Sales.ViewModels.Products
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
-            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, ProductID, Settings.TokenType, Settings.AccessToke);
+            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, ProductID, Preferences.TokenType, Preferences.AccessToke);
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.Confirm, Languages.Accept);

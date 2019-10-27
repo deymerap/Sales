@@ -1,32 +1,51 @@
-﻿namespace Sales.ViewModels
-{
-    using GalaSoft.MvvmLight.Command;
-    using Sales.Helpers;
-    using Sales.Views.Login;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Input;
-    using Xamarin.Forms;
+﻿using GalaSoft.MvvmLight.Command;
+using Sales.Helpers;
+using Sales.Views.Login;
+using System.Windows.Input;
+using Xamarin.Forms;
 
+namespace Sales.ViewModels
+{
     public class MenuItemViewModel
     {
-        private void CloseSession()
-        {
-            Settings.AccessToke = string.Empty;
-            Settings.TokenType = string.Empty;
 
-            MainViewModel.GetInstance().Login = new LoginViewModel();
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        #region Properties
+        public string Icon { get; set; }
+        public string Title { get; set; }
+        public string PageName { get; set; }
+        #endregion
+
+        #region FuncAndMethods
+        private void Goto()
+        {
+            switch (this.PageName)
+            {
+                case "AboutPage":
+ 
+                    break;
+
+                case "SetupPage":
+
+                    break;
+
+                case "LoginPage":
+                    Preferences.AccessToke = string.Empty;
+                    Preferences.TokenType = string.Empty;
+                    MainViewModel.GetInstance().Login = new LoginViewModel();
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    break;
+            }
+
         }
 
+        #endregion
 
         #region Command
-        public ICommand cmdCloseSession
+        public ICommand cmdGoto
         {
             get
             {
-                return new RelayCommand(CloseSession);
+                return new RelayCommand(Goto);
             }
         }
         #endregion

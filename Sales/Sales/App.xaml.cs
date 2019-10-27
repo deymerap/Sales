@@ -14,10 +14,9 @@
         public App()
         {
             InitializeComponent();
-            if(Settings.IsRemembered && !string.IsNullOrEmpty(Settings.AccessToke))
+            if(Preferences.IsRemembered && !string.IsNullOrEmpty(Preferences.AccessToke))
             {
                 MainViewModel.GetInstance().Products = new ProductsViewModel();
-                MainViewModel.GetInstance().MenuItem = new MenuItemViewModel();
                 MainPage = new MasterPage();
             }
             else

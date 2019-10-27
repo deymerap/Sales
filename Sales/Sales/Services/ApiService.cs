@@ -5,32 +5,23 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.Connectivity;
+//using Plugin.Connectivity;
 using Sales.Helpers;
 using System.Net.Http.Headers;
+using Xamarin.Essentials;
 
 namespace Sales.Services
 {
     class ApiService
     {
-        public async Task<Response> CheckConnection()
+        public Response CheckConnection()
         {
-            if (!CrossConnectivity.Current.IsConnected)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 return new Response
                 {
                     IsSuccess = false,
-                    Message= Languages.TurnOnInternet,
-                };
-            }
-
-            var vStrIsReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
-            if (!vStrIsReachable)
-            {
-                return new Response
-                {
-                    IsSuccess = false,
-                    Message = Languages.NoInternet,
+                    Message = Languages.TurnOnInternet,
                 };
             }
 
@@ -38,6 +29,30 @@ namespace Sales.Services
             {
                 IsSuccess = true,
             };
+
+            //if (!CrossConnectivity.Current.IsConnected)
+            //{
+            //    return new Response
+            //    {
+            //        IsSuccess = false,
+            //        Message= Languages.TurnOnInternet,
+            //    };
+            //}
+
+            //var vStrIsReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            //if (!vStrIsReachable)
+            //{
+            //    return new Response
+            //    {
+            //        IsSuccess = false,
+            //        Message = Languages.NoInternet,
+            //    };
+            //}
+
+            //return new Response
+            //{
+            //    IsSuccess = true,
+            //};
         }
 
         public async Task<Response>GetList<T>(string pvUrlBase ,string pvStrPrefix, string pvStrController)

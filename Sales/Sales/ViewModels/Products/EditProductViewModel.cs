@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Sales.Common.Models;
 using Sales.Helpers;
 using Sales.Services;
 using Sales.ViewModels.Products;
@@ -56,14 +58,122 @@ namespace Sales.ViewModels
             apiService = new ApiService();
         }
 
-        private void ChangeImage()
+        private async void ChangeImage()
         {
-            throw new NotImplementedException();
+            await CrossMedia.Current.Initialize();
+            var vSource = await Application.Current.MainPage.DisplayActionSheet(
+                Languages.ImageSource,
+                Languages.Cancel,
+                null,
+                Languages.FromGallery,
+                Languages.NewPicture
+                );
+
+            if (vSource == Languages.Cancel)
+            {
+                this.vImageFile = null;
+                return;
+            }
+
+            if (vSource == Languages.NewPicture)
+            {
+                StoreCameraMediaOptions vObjCamara = new StoreCameraMediaOptions
+                {
+                    Directory = "Sample",
+                    Name = "test.jpg",
+                    PhotoSize = PhotoSize.Small
+                };
+
+                this.vImageFile = await CrossMedia.Current.TakePhotoAsync(vObjCamara);
+            }
+            else
+            {
+                this.vImageFile = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (this.vImageFile != null)
+            {
+                ImageSource = ImageSource.FromStream(() =>
+                {
+                    var vStream = this.vImageFile.GetStream();
+                    return vStream;
+                });
+            }
         }
 
         private async void EditProducts()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(this.productItemViewModel.Description))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.AddProdDescError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (this.productItemViewModel.Price < 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.AddProdPriceError,
+                    Languages.Accept);
+                return;
+            }
+
+            this.IsRunningActIndicator = true;
+            this.IsEnabledCmdSave = false;
+
+            var vObjConnection = this.apiService.CheckConnection();
+            if (!vObjConnection.IsSuccess)
+            {
+                this.IsRunningActIndicator = false;
+                this.IsEnabledCmdSave = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
+                return;
+            }
+
+            string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
+            string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
+            string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
+
+            byte[] vImageArray = null;
+            if (vImageFile != null)
+            {
+                vImageArray = FileHelper.ReadFully(this.vImageFile.GetStream());
+                this.productItemViewModel.ImageArray = vImageArray;
+            }
+
+            //Product vObProduct = new Product
+            //{
+            //    Description = this.productItemViewModel.Description,
+            //    Price = vPrice,
+            //    Notes = this.productItemViewModel.Notes,
+            //    ImageArray = vImageArray,
+            //};
+
+            var vResponse = await apiService.Put(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, this.productItemViewModel, this.productItemViewModel.ProductID, Preferences.TokenType, Preferences.AccessToke);
+
+            if (!vResponse.IsSuccess)
+            {
+                this.IsRunningActIndicator = false;
+                this.IsEnabledCmdSave = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, vResponse.Message, Languages.Accept);
+                return;
+            }
+
+            Product vNewProducts = (Product)vResponse.Result;
+            ProductsViewModel vProductsViewModel = ProductsViewModel.GetInstance();
+            var vOldProduct = vProductsViewModel.vObjList.Where(Prod => Prod.ProductID == this.productItemViewModel.ProductID).FirstOrDefault();
+            if(vOldProduct != null)
+            {
+                vProductsViewModel.vObjList.Remove(vOldProduct);
+            }
+            vProductsViewModel.vObjList.Add(vNewProducts);
+            vProductsViewModel.RefreshListProducts();
+            this.IsRunningActIndicator = false;
+            this.IsEnabledCmdSave = true;
+            await App.Navigator.PopAsync();
         }
 
         private async void DeleteProducts()
@@ -83,7 +193,7 @@ namespace Sales.ViewModels
             this.IsRunningActIndicator = true;
             this.IsEnabledCmdSave = false;
 
-            var vObjConnection = await this.apiService.CheckConnection();
+            var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRunningActIndicator = false;
@@ -95,7 +205,7 @@ namespace Sales.ViewModels
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
-            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, this.ProductItemViewModel.ProductID, Settings.TokenType, Settings.AccessToke);
+            var response = await this.apiService.Delete(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, this.ProductItemViewModel.ProductID, Preferences.TokenType, Preferences.AccessToke);
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.Confirm, Languages.Accept);

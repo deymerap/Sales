@@ -48,11 +48,11 @@
         #region Contrunctorts
         public LoginViewModel()
         {
-            if(Settings.IsRemembered)
+            if(Preferences.IsRemembered)
             {
-                this.Email = Settings.Email;
-                this.Password = Settings.PwdEMail;
-                this.IsRemembered = Settings.IsRemembered;
+                this.Email = Preferences.Email;
+                this.Password = Preferences.PwdEMail;
+                this.IsRemembered = Preferences.IsRemembered;
             }
             this.IsEnabledcmdLogin = true;
             this.IsRemembered = true;
@@ -84,7 +84,7 @@
             this.IsRunningActIndicator = true;
             this.IsEnabledcmdLogin = false;
 
-            var vObjConnection = await this.apiService.CheckConnection();
+            var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRunningActIndicator = false;
@@ -104,11 +104,11 @@
                 return;
             }
 
-            Settings.TokenType = vObjTResponse.TokenType;
-            Settings.AccessToke = vObjTResponse.AccessToken;
-            Settings.IsRemembered = this.IsRemembered;
-            Settings.Email = this.Email;
-            Settings.PwdEMail = this.Password;
+            Preferences.TokenType = vObjTResponse.TokenType;
+            Preferences.AccessToke = vObjTResponse.AccessToken;
+            Preferences.IsRemembered = this.IsRemembered;
+            Preferences.Email = this.Email;
+            Preferences.PwdEMail = this.Password;
 
             MainViewModel.GetInstance().Products= new ProductsViewModel();
             Application.Current.MainPage = new MasterPage();
