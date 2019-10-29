@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Common.Models;
     using GalaSoft.MvvmLight.Command;
@@ -15,12 +16,13 @@
     {
         #region Attributes
         private ApiService apiService;
+        private DataService dataService;
         private ObservableCollection<Products.ProductItemViewModel> listProducts;
         private bool isRefreshing;
         public String filterText;
         #endregion
 
-        #region Propperties
+        #region Properties
         public List<Product> vObjList { get; set; }
 
         public bool IsRefreshing
@@ -50,38 +52,66 @@
         {
             instance = this;
             this.apiService = new ApiService();
+            this.dataService = new DataService();
             this.LoadProducts();
         }
         
         private async void LoadProducts()
         {
             var vObjConnection = this.apiService.CheckConnection();
-            if (!vObjConnection.IsSuccess)
+            if (vObjConnection.IsSuccess)
             {
-                this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
-                return;
+                bool vBlnIsLoadDataApi = await this.LoadDataFromApi();
+                if(vBlnIsLoadDataApi)
+                {
+                    this.SaveProductsToDB();
+                }
+            }
+            else
+            {
+                 await this.LoadDataFromDB();
             }
 
+            if(this.vObjList == null || vObjList.Count == 0)
+            {
+                this.IsRefreshing = false;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.NoProductsMessage, Languages.Accept);
+                return;
+            }           
+            this.RefreshListProducts();
+            this.IsRefreshing = false;
+        }
+
+        private async Task LoadDataFromDB()
+        {
+            this.vObjList = await dataService.GetAllProducts();
+        }
+
+        private async Task SaveProductsToDB()
+        {
+            await this.dataService.DeleteAllProducts();
+            _ = this.dataService.Insert(this.vObjList);
+        }
+
+        private async Task<bool> LoadDataFromApi()
+        {
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
             string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
             this.IsRefreshing = true;
-            var response = await this.apiService.GetList<Product>(vStrUrlAPI, 
-                                                                vStrUrlAPIPrefix, 
-                                                                vStrUrlProductsController, 
-                                                                Preferences.TokenType, 
+            var response = await this.apiService.GetList<Product>(vStrUrlAPI,
+                                                                vStrUrlAPIPrefix,
+                                                                vStrUrlProductsController,
+                                                                Preferences.TokenType,
                                                                 Preferences.AccessToke);
             if (!response.IsSuccess)
             {
-                this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
-                return;
+                //this.IsRefreshing = false;
+                //await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
+                return false;
             }
-           vObjList = (List<Product>)response.Result;
-            this.RefreshListProducts();
-            this.IsRefreshing = false;
-            
+            vObjList = (List<Product>)response.Result;
+            return true;
         }
 
         public void RefreshListProducts()
