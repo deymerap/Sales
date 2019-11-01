@@ -321,4 +321,13 @@
   <data name="CategoryError" xml:space="preserve">
     <value>You must select a category</value>
   </data>
+  <data name="EmailValidation" xml:space="preserve">
+    <value>You must enter your email.</value>
+  </data>
+  <data name="PasswordValidation" xml:space="preserve">
+    <value>You must enter your password.</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>The email or password are not valid.</value>
+  </data>
 </root>

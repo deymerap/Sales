@@ -14,7 +14,7 @@
 
         public DataService()
         {
-            this.OpenOrCreateDB();
+            _ = this.OpenOrCreateDB();
         }
 
         private async Task OpenOrCreateDB()

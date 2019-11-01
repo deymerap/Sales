@@ -1,34 +1,40 @@
-﻿namespace Sales.ViewModels
+﻿namespace Sales.ViewModels.Login
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Windows.Input;
+    using Xamarin.Forms;
     using GalaSoft.MvvmLight.Command;
     using Plugin.Media;
     using Plugin.Media.Abstractions;
-    using Sales.Common.Models;
-    using Sales.Helpers;
     using Sales.Services;
-    using System;
-    using System.Windows.Input;
-    using Xamarin.Forms;
+    using Sales.Helpers;
+    using Sales.Common.Models;
 
-    public class AddProductViewModel : BaseViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         #region Attributes
         private ApiService apiService;
-        private bool isEnabledCmdSave;
+        private bool isEnabledCmd;
         private bool isRunningActIndicator;
         private MediaFile vImageFile { get; set; }
         private ImageSource imageSource;
         #endregion
 
         #region Propperties
-        public string Description { get; set; }
-        public string Notes { get; set; }
-        public string Price { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EMail { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Password { get; set; }
+        public string PasswordConfirm { get; set; }
 
-        public bool IsEnabledCmdSave
+        public bool IsEnabledCmd
         {
-            get { return this.isEnabledCmdSave; }
-            set { this.SetValue(ref this.isEnabledCmdSave, value); }
+            get { return this.isEnabledCmd; }
+            set { this.SetValue(ref this.isEnabledCmd, value); }
         }
 
         public bool IsRunningActIndicator
@@ -47,101 +53,148 @@
         #endregion
 
         #region Contrunctorts
-        public AddProductViewModel()
+        public RegisterViewModel()
         {
-            this.IsEnabledCmdSave = true;
-            this.ImageSource = "NoImage.png";
+            this.IsEnabledCmd = true;
+            this.ImageSource = "profile.png";
             apiService = new ApiService();
         }
 
         private async void AddProducts()
         {
-            if(string.IsNullOrEmpty(this.Description))
+            if (string.IsNullOrEmpty(this.FirstName))
             {
                 await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
-                    Languages.AddProdDescError,
+                    Languages.FirstNameError,
                     Languages.Accept);
                 return;
             }
 
-            if (string.IsNullOrEmpty(this.Price) )
+            if (string.IsNullOrEmpty(this.LastName))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    Languages.Error, 
-                    Languages.AddProdPriceError, 
+                    Languages.Error,
+                    Languages.LastNameError,
                     Languages.Accept);
                 return;
             }
 
-            var vPrice = decimal.Parse(this.Price);
-            if (vPrice < 0)
+            if (string.IsNullOrEmpty(this.EMail))
             {
                 await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
-                    Languages.AddProdPriceError,
+                    Languages.EMailError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (!RegexHelper.IsValidEmailAddr(this.EMail))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.EMailError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Phone))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PhoneError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Password))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (this.Password.Length < 6)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordError,
+                    Languages.Accept);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.PasswordConfirm))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordConfirmError,
+                    Languages.Accept);
+                return;
+            }
+
+
+            if (!this.Password.Equals(this.PasswordConfirm))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordsNoMatch,
                     Languages.Accept);
                 return;
             }
 
             this.IsRunningActIndicator = true;
-            this.IsEnabledCmdSave = false;
+            this.IsEnabledCmd = false;
 
             var vObjConnection = this.apiService.CheckConnection();
             if (!vObjConnection.IsSuccess)
             {
                 this.IsRunningActIndicator = false;
-                this.IsEnabledCmdSave = true;
+                this.IsEnabledCmd = true;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, vObjConnection.Message, Languages.Accept);
                 return;
             }
 
             string vStrUrlAPI = Application.Current.Resources["UrlAPI"].ToString();
             string vStrUrlAPIPrefix = Application.Current.Resources["APIPrefix "].ToString();
-            string vStrUrlProductsController = Application.Current.Resources["ProductsController"].ToString();
+            string vStrUrlController = Application.Current.Resources["UsersController"].ToString();
 
             byte[] vImageArray = null;
-            if(vImageFile !=  null)
+            if (vImageFile != null)
             {
                 vImageArray = FileHelper.ReadFully(this.vImageFile.GetStream());
             }
-           
-            Product vObProduct = new Product {
-                Description = this.Description,
-                Price = vPrice,
-                Notes = this.Notes,
+
+            var vObjUserRequest = new UserRequest
+            {
+                Address = this.Address,
+                EMail = this.EMail,
+                FirstName = this.FirstName,
                 ImageArray = vImageArray,
+                LastName = this.LastName,
+                Password = this.Password,
             };
 
-            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlProductsController, vObProduct, Preferences.TokenType, Preferences.AccessToke);
+            var vResponse = await apiService.Post(vStrUrlAPI, vStrUrlAPIPrefix, vStrUrlController, vObjUserRequest);
 
             if (!vResponse.IsSuccess)
             {
                 this.IsRunningActIndicator = false;
-                this.IsEnabledCmdSave = true;
+                this.IsEnabledCmd = true;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, vResponse.Message, Languages.Accept);
                 return;
             }
 
-            Product vNewProducts = (Product) vResponse.Result;
-            //var vNewProductsItem = new Products.ProductItemViewModel
-            //{
-            //    ProductID = vNewProducts.ProductID,
-            //    Description = vNewProducts.Description,
-            //    Notes = vNewProducts.Notes,
-            //    Price = vNewProducts.Price,
-            //    IsAvailable = vNewProducts.IsAvailable,
-            //    PublishOn = vNewProducts.PublishOn,
-            //    ImageArray = vNewProducts.ImageArray,
-            //    ImagePath = vNewProducts.ImagePath,
-            //};
-            ProductsViewModel vProductsViewModel = ProductsViewModel.GetInstance();
-            //vProductsViewModel.ListProducts.Add(vNewProductsItem);
-            vProductsViewModel.vObjList.Add(vNewProducts);
-            vProductsViewModel.RefreshListProducts();
             this.IsRunningActIndicator = false;
-            this.IsEnabledCmdSave = true;
-            await App.Navigator.PopAsync();
+            this.IsEnabledCmd = true;
+
+            await Application.Current.MainPage.DisplayAlert(
+                Languages.Confirm,
+                Languages.RegisterConfirmation,
+                Languages.Accept);
+
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
 

@@ -4,6 +4,7 @@
     using Sales.Common.Models;
     using Sales.Helpers;
     using Sales.Services;
+    using Sales.ViewModels.Login;
     using Sales.Views;
     using Sales.Views.Products;
     using System;
@@ -115,6 +116,13 @@
             this.IsRunningActIndicator = true;
             this.IsEnabledcmdLogin = false;
         }
+
+        private async void Register()
+        {
+            MainViewModel.GetInstance().RegisterUser = new RegisterViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
         #endregion
 
 
@@ -124,7 +132,7 @@
 
 
         #region Command
-        public ICommand cmdLogin
+        public ICommand CmdLogin
         {
             get
             {
@@ -132,6 +140,13 @@
             }
         }
 
+        public ICommand CmdRegister
+        {
+            get
+            {
+                return new RelayCommand(Register);
+            }
+        }
         #endregion
     }
 }

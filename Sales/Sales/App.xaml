@@ -16,6 +16,7 @@
             <x:String x:Key="UrlAPI">https://xamarinsalesapi.azurewebsites.net</x:String>
             <x:String x:Key="APIPrefix ">api</x:String>
             <x:String x:Key="ProductsController">Products</x:String>
+            <x:String x:Key="UsersController">Users</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

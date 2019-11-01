@@ -4,6 +4,7 @@
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Sales.Helpers;
+    using Sales.ViewModels.Login;
     using Sales.Views.Products;
     public class MainViewModel
     {
@@ -11,6 +12,7 @@
         public ProductsViewModel Products { get; set; }
         public AddProductViewModel AddProducts { get; set; }
         public EditProductViewModel EditProducts { get; set; }
+        public RegisterViewModel RegisterUser { get; set; }
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
 
 

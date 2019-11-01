@@ -168,4 +168,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_exit_to_app.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\profile.png" />
+  </ItemGroup>
 </Project>

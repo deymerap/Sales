@@ -75,7 +75,7 @@
                     <Button
                         BackgroundColor="Navy"
                         BorderRadius="23"
-                        Command="{Binding cmdLogin}"
+                        Command="{Binding CmdLogin}"
                         HeightRequest="46"
                         HorizontalOptions="FillAndExpand"
                         IsEnabled="{Binding IsEnabledcmdLogin}"
@@ -85,10 +85,10 @@
                     <Button
                         BackgroundColor="Purple"
                         BorderRadius="23"
-                        Command="{Binding cmdRegister}"
+                        Command="{Binding CmdRegister}"
                         HeightRequest="46"
                         HorizontalOptions="FillAndExpand"
-                        IsEnabled="{Binding IsEnabled}"
+                        IsEnabled="{Binding IsEnabledcmdLogin}"
                         Text="{i18n:Translate Register}"
                         TextColor="White">
                     </Button>

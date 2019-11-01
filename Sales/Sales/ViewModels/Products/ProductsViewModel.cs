@@ -64,7 +64,7 @@
                 bool vBlnIsLoadDataApi = await this.LoadDataFromApi();
                 if(vBlnIsLoadDataApi)
                 {
-                    this.SaveProductsToDB();
+                    _ = this.SaveProductsToDB();
                 }
             }
             else

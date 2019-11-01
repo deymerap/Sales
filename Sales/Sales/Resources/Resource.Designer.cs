@@ -340,6 +340,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter your email..
+        /// </summary>
+        public static string EmailValidation {
+            get {
+                return ResourceManager.GetString("EmailValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -565,6 +574,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter your password..
+        /// </summary>
+        public static string PasswordValidation {
+            get {
+                return ResourceManager.GetString("PasswordValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -651,6 +669,15 @@ namespace Sales.Resources {
         public static string Setup {
             get {
                 return ResourceManager.GetString("Setup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email or password are not valid..
+        /// </summary>
+        public static string SomethingWrong {
+            get {
+                return ResourceManager.GetString("SomethingWrong", resourceCulture);
             }
         }
         
